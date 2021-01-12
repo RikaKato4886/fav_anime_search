@@ -29,11 +29,11 @@ function updateDOM(data) { //data --> res.json()の内容
   let output = '<div class="row">';
   data.results.forEach(item => {
     output += `
-      <div class="col-md-4">
+      <div class="col-md-4" style="margin-bottom:4rem;">
       <h5 class="card-title">${item.title}</h5>
       <img src=${item.image_url}>
       <p class="card-text">${item.synopsis}.</p>
-      <a class="btn btn-secondary" href="${item.url}">View Details</a>
+      <a class="btn btn-secondary" href="${item.url}" target="_blank">View Details</a>
       </div>
     `
   });
