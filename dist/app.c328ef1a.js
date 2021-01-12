@@ -118,24 +118,21 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"app.js":[function(require,module,exports) {
+/*やること-->入力がないときのアラート出す
+*/
 //Get api url
 var base_url = "https://api.jikan.moe/v3";
 var searchForm = document.getElementById('search-form');
 var selectedLimit = document.getElementById('limit');
 var selectedGenre = document.getElementById('genre');
 var searchBtn = document.getElementById('search-btn');
-var searchInput = document.getElementById('search-input');
-/*やること-->入力がないときのアラート出す
-
-*/
-//Form Event Listener
+var searchInput = document.getElementById('search-input'); //Form Event Listener
 
 searchForm.addEventListener('submit', function (e) {
   e.preventDefault(); //search word
 
   var searchTerm = searchInput.value;
-  console.log(searchTerm); //`${base_url}/search/manga?q=${searchTerm}&page=1
-
+  console.log(searchTerm);
   fetch("".concat(base_url, "/search/manga?q=").concat(searchTerm, "&page=1&genre_exclude=33,12,28,34,43&limit=").concat(selectedLimit.value)).then(function (res) {
     return res.json();
   }).then(updateDOM).catch(function (err) {
@@ -154,47 +151,6 @@ function updateDOM(data) {
   document.getElementById('search-results').innerHTML = output;
 } // const form = new FormData(this);
 // const query = form.get("search");
-// function updateDom(data){
-//表示するところ
-//     const animeByCategories = data.results
-//         .reduce((acc, anime)=>{
-//             const {type} = anime;
-//             if(acc[type] === undefined) acc[type] = [];
-//             acc[type].push(anime);
-//             return acc;
-//         }, {});
-//         searchResults.innerHTML = Object.keys(animeByCategories).map(key=>{
-//             const animesHTML = animeByCategories[key]
-//             .sort((a,b)=>a.episodes-b.episodes)
-//             .map(anime=>{
-//                 return `
-//                     <div class="card">
-//                         <div class="card-image">
-//                             <img src="${anime.image_url}">
-//                         </div>
-//                         <div class="card-content">
-//                             <span class="card-title">${anime.title}</span>
-//                             <p>${anime.synopsis}</p>
-//                         </div>
-//                         <div class="card-action">
-//                             <a href="${anime.url}">Find out more</a>
-//                         </div>
-//                     </div>
-//                 `
-//             }).join("");
-//             return `
-//                 <section>
-//                     <h3>${key.toUpperCase()}</h3>
-//                     <div class="kemicofa-row">${animesHTML}</div>
-//                 </section>
-//             `
-//         }).join("");
-// }
-// function pageLoaded(){
-//     const form = document.getElementById('search_form');
-//     form.addEventListener("submit", searchAnime);
-// }
-// window.addEventListener("load", pageLoaded);
 },{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -223,7 +179,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59268" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "57583" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
