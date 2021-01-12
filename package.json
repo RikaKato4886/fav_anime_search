@@ -1,0 +1,8 @@
+{
+  "name": "fav_anime_search",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/RikaKato4886/fav_anime_search.git",
+  "author": "Rika <rika4886@gmail.com>",
+  "license": "MIT"
+}
