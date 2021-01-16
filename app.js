@@ -15,6 +15,7 @@ searchForm.addEventListener('submit', (e) => {
   e.preventDefault();
   //search word
   const searchTerm = searchInput.value;
+  // 定数searchTermの値がnullの場合はalert表示と、条件分岐をすることができそうですね
   console.log(searchTerm)
 
   fetch(`${base_url}/search/manga?q=${searchTerm}&page=1&genre_exclude=33,12,28,34,43&limit=${selectedLimit.value}`)

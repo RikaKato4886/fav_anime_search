@@ -3,6 +3,13 @@
   "version": "1.0.0",
   "main": "index.js",
   "repository": "https://github.com/RikaKato4886/fav_anime_search.git",
-  "author": "Rika <rika4886@gmail.com>",
-  "license": "MIT"
+  "author": "Rika",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.4"
+  }
 }
