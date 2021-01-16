@@ -1,6 +1,3 @@
-/*やること-->入力がないときのアラート出す
-*/
-
 //Get api url
 const base_url = "https://api.jikan.moe/v3";
 
@@ -18,10 +15,14 @@ searchForm.addEventListener('submit', (e) => {
   // 定数searchTermの値がnullの場合はalert表示と、条件分岐をすることができそうですね
   console.log(searchTerm)
 
-  fetch(`${base_url}/search/manga?q=${searchTerm}&page=1&genre_exclude=33,12,28,34,43&limit=${selectedLimit.value}`)
-  .then(res=>res.json())
-  .then(updateDOM)
-  .catch(err=>console.warn(err.message));
+  if(searchTerm == "") {
+    alert('キーワードを入力してください')
+  } else {
+    fetch(`${base_url}/search/manga?q=${searchTerm}&page=1&genre_exclude=33,12,28,34,43&limit=${selectedLimit.value}`)
+    .then(res=>res.json())
+    .then(updateDOM)
+    .catch(err=>console.warn(err.message));
+  }
 })
 
 //Update Dom

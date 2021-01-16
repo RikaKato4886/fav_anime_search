@@ -118,8 +118,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"app.js":[function(require,module,exports) {
-/*やること-->入力がないときのアラート出す
-*/
 //Get api url
 var base_url = "https://api.jikan.moe/v3";
 var searchForm = document.getElementById('search-form');
@@ -131,13 +129,19 @@ var searchInput = document.getElementById('search-input'); //Form Event Listener
 searchForm.addEventListener('submit', function (e) {
   e.preventDefault(); //search word
 
-  var searchTerm = searchInput.value;
+  var searchTerm = searchInput.value; // 定数searchTermの値がnullの場合はalert表示と、条件分岐をすることができそうですね
+
   console.log(searchTerm);
-  fetch("".concat(base_url, "/search/manga?q=").concat(searchTerm, "&page=1&genre_exclude=33,12,28,34,43&limit=").concat(selectedLimit.value)).then(function (res) {
-    return res.json();
-  }).then(updateDOM).catch(function (err) {
-    return console.warn(err.message);
-  });
+
+  if (searchTerm == "") {
+    alert('キーワードを入力してください');
+  } else {
+    fetch("".concat(base_url, "/search/manga?q=").concat(searchTerm, "&page=1&genre_exclude=33,12,28,34,43&limit=").concat(selectedLimit.value)).then(function (res) {
+      return res.json();
+    }).then(updateDOM).catch(function (err) {
+      return console.warn(err.message);
+    });
+  }
 }); //Update Dom
 
 function updateDOM(data) {
@@ -179,7 +183,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58483" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54857" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
