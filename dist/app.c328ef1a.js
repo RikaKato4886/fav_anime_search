@@ -149,12 +149,11 @@ function updateDOM(data) {
   console.log(data);
   var output = '<div class="row">';
   data.results.forEach(function (item) {
-    output += "\n      <div class=\"col-md-4\" style=\"margin-bottom:4rem;\">\n      <h5 class=\"card-title\">".concat(item.title, "</h5>\n      <img src=").concat(item.image_url, ">\n      <p class=\"card-text\">").concat(item.synopsis, ".</p>\n      <a class=\"btn btn-secondary\" href=\"").concat(item.url, "\" target=\"_blank\">View Details</a>\n      </div>\n    ");
+    output += "\n      <div class=\"col-md-4\" style=\"margin-bottom:4rem;\">\n      <h5 class=\"card-title\">".concat(item.title, "</h5>\n      <img src=").concat(item.image_url, ">\n      <p class=\"card-text\">").concat(item.synopsis, ".</p>\n      <a class=\"btn btn-secondary\" href=\"").concat(item.url, "\" target=\"_blank\">View Details</a><span class=\"addBtn\"> +</span>\n      </div>\n    ");
   });
   output += "</div>";
   document.getElementById('search-results').innerHTML = output;
-} // const form = new FormData(this);
-// const query = form.get("search");
+}
 },{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -183,7 +182,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54857" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62875" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

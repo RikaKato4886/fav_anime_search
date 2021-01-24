@@ -35,7 +35,7 @@ function updateDOM(data) { //data --> res.json()の内容
       <h5 class="card-title">${item.title}</h5>
       <img src=${item.image_url}>
       <p class="card-text">${item.synopsis}.</p>
-      <a class="btn btn-secondary" href="${item.url}" target="_blank">View Details</a>
+      <a class="btn btn-secondary" href="${item.url}" target="_blank">View Details</a><span class="addBtn"> +</span>
       </div>
     `
   });
@@ -43,6 +43,3 @@ function updateDOM(data) { //data --> res.json()の内容
   document.getElementById('search-results').innerHTML = output;
 
 }
-
-// const form = new FormData(this);
-// const query = form.get("search");
