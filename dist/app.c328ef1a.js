@@ -118,42 +118,76 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"app.js":[function(require,module,exports) {
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
 //Get api url
 var base_url = "https://api.jikan.moe/v3";
-var searchForm = document.getElementById('search-form');
-var selectedLimit = document.getElementById('limit');
-var selectedGenre = document.getElementById('genre');
-var searchBtn = document.getElementById('search-btn');
-var searchInput = document.getElementById('search-input'); //Form Event Listener
 
-searchForm.addEventListener('submit', function (e) {
-  e.preventDefault(); //search word
+var App = /*#__PURE__*/function () {
+  function App() {
+    _classCallCheck(this, App);
 
-  var searchTerm = searchInput.value; // 定数searchTermの値がnullの場合はalert表示と、条件分岐をすることができそうですね
-
-  console.log(searchTerm);
-
-  if (searchTerm == "") {
-    alert('キーワードを入力してください');
-  } else {
-    fetch("".concat(base_url, "/search/manga?q=").concat(searchTerm, "&page=1&genre_exclude=33,12,28,34,43&limit=").concat(selectedLimit.value)).then(function (res) {
-      return res.json();
-    }).then(updateDOM).catch(function (err) {
-      return console.warn(err.message);
-    });
+    this.getElements();
+    this.submitKeyword();
+    this.updateDOM();
   }
-}); //Update Dom
 
-function updateDOM(data) {
-  //data --> res.json()の内容
-  console.log(data);
-  var output = '<div class="row">';
-  data.results.forEach(function (item) {
-    output += "\n      <div class=\"col-md-4\" style=\"margin-bottom:4rem;\">\n      <h5 class=\"card-title\">".concat(item.title, "</h5>\n      <img src=").concat(item.image_url, ">\n      <p class=\"card-text\">").concat(item.synopsis, ".</p>\n      <a class=\"btn btn-secondary\" href=\"").concat(item.url, "\" target=\"_blank\">View Details</a><span class=\"addBtn\"> +</span>\n      </div>\n    ");
-  });
-  output += "</div>";
-  document.getElementById('search-results').innerHTML = output;
-}
+  _createClass(App, [{
+    key: "getElements",
+    value: function getElements() {
+      this.searchForm = document.getElementById('search-form');
+      this.selectedLimit = document.getElementById('limit');
+      this.selectedGenre = document.getElementById('genre');
+      this.searchBtn = document.getElementById('search-btn');
+      this.searchInput = document.getElementById('search-input');
+    } //Form Event Listener
+
+  }, {
+    key: "submitKeyword",
+    value: function submitKeyword() {
+      var _this = this;
+
+      this.searchForm.addEventListener('submit', function (e) {
+        e.preventDefault(); //search word
+
+        _this.searchTerm = _this.searchInput.value; // 定数searchTermの値がnullの場合はalert表示と、条件分岐をすることができそうですね
+
+        if (_this.searchTerm == "") {
+          alert('キーワードを入力してください');
+        } else {
+          fetch("".concat(base_url, "/search/manga?q=").concat(_this.searchTerm, "&page=1&genre_exclude=33,12,28,34,43&limit=").concat(_this.selectedLimit.value)).then(function (res) {
+            return res.json();
+          }).then(updateDOM).catch(function (err) {
+            return console.warn(err.message);
+          });
+        }
+      });
+    } //Update Dom
+
+  }, {
+    key: "updateDOM",
+    value: function updateDOM(data) {
+      //data --> res.json()の内容
+      console.log(data);
+      var output = '<div class="row">';
+      data.results.forEach(function (item) {
+        output += "\n        <div class=\"col-md-4\" style=\"margin-bottom:4rem;\">\n        <h5 class=\"card-title\">".concat(item.title, "</h5>\n        <img src=").concat(item.image_url, ">\n        <p class=\"card-text\">").concat(item.synopsis, ".</p>\n        <a class=\"btn btn-secondary\" href=\"").concat(item.url, "\" target=\"_blank\">View Details</a><button class=\"addBtn\"> +</button>\n        </div>\n      ");
+      });
+      output += "</div>";
+      document.getElementById('search-results').innerHTML = output;
+      var addBtn = document.querySelector('.addBtn');
+      addBtn.addEventListener('click', function () {
+        console.log('rika');
+      });
+    }
+  }]);
+
+  return App;
+}();
 },{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -182,7 +216,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62875" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65257" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
