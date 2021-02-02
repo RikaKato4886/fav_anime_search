@@ -131,9 +131,11 @@ var App = /*#__PURE__*/function () {
   function App() {
     _classCallCheck(this, App);
 
+    this.getBookInfo = this.getBookInfo.bind(this);
     this.getElements();
     this.submitKeyword();
     this.updateDOM();
+    this.getBookInfo();
   }
 
   _createClass(App, [{
@@ -154,14 +156,14 @@ var App = /*#__PURE__*/function () {
       this.searchForm.addEventListener('submit', function (e) {
         e.preventDefault(); //search word
 
-        _this.searchTerm = _this.searchInput.value; // 定数searchTermの値がnullの場合はalert表示と、条件分岐をすることができそうですね
+        _this.searchTerm = _this.searchInput.value; // when searchTerm is null, show alert
 
         if (_this.searchTerm == "") {
           alert('キーワードを入力してください');
         } else {
           fetch("".concat(base_url, "/search/manga?q=").concat(_this.searchTerm, "&page=1&genre_exclude=33,12,28,34,43&limit=").concat(_this.selectedLimit.value)).then(function (res) {
             return res.json();
-          }).then(updateDOM).catch(function (err) {
+          }).then(_this.updateDOM).catch(function (err) {
             return console.warn(err.message);
           });
         }
@@ -171,23 +173,45 @@ var App = /*#__PURE__*/function () {
   }, {
     key: "updateDOM",
     value: function updateDOM(data) {
+      var _this2 = this;
+
       //data --> res.json()の内容
       console.log(data);
       var output = '<div class="row">';
       data.results.forEach(function (item) {
-        output += "\n        <div class=\"col-md-4\" style=\"margin-bottom:4rem;\">\n        <h5 class=\"card-title\">".concat(item.title, "</h5>\n        <img src=").concat(item.image_url, ">\n        <p class=\"card-text\">").concat(item.synopsis, ".</p>\n        <a class=\"btn btn-secondary\" href=\"").concat(item.url, "\" target=\"_blank\">View Details</a><button class=\"addBtn\"> +</button>\n        </div>\n      ");
+        output += "\n        <div class=\"col-md-4\" style=\"margin-bottom:4rem;\">\n        <h5 class=\"card-title\">".concat(item.title, "</h5>\n        <img src=").concat(item.image_url, ">\n        <p class=\"card-text\">").concat(item.synopsis, ".</p>\n        <a class=\"btn btn-secondary\" href=\"").concat(item.url, "\" target=\"_blank\">View Details</a><button class=\"addBtns\"> +</button>\n        </div>\n      ");
       });
       output += "</div>";
       document.getElementById('search-results').innerHTML = output;
-      var addBtn = document.querySelector('.addBtn');
-      addBtn.addEventListener('click', function () {
-        console.log('rika');
+      var addBtns = document.querySelectorAll('.addBtns');
+      addBtns.forEach(function (addBtn) {
+        addBtn.addEventListener('click', _this2.getBookInfo); //book informationをreturnする？
       });
     }
+  }, {
+    key: "getBookInfo",
+    value: function getBookInfo() {
+      //上の情報を持って来れるのか・・？
+      //情報を取得して、localstorageに保存したい
+      console.log('rika');
+    } //上でゲットした情報をUIにupdateする
+
+  }, {
+    key: "updateListDOM",
+    value: function updateListDOM() {} //xボタンでbook informationを削除する
+
+  }, {
+    key: "deleteBook",
+    value: function deleteBook() {}
   }]);
 
   return App;
-}();
+}(); // ロード時にAppクラスをインスタンス化する。
+
+
+window.addEventListener('load', function () {
+  return new App();
+});
 },{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -216,7 +240,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "65257" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "52353" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -3,10 +3,12 @@ const base_url = "https://api.jikan.moe/v3";
 
 class App {
   constructor(){
+    this.getBookInfo = this.getBookInfo.bind(this);
 
     this.getElements();
     this.submitKeyword();
     this.updateDOM();
+    this.getBookInfo();
   }
 
   getElements(){
@@ -23,13 +25,13 @@ class App {
       e.preventDefault();
       //search word
       this.searchTerm = this.searchInput.value;
-      // 定数searchTermの値がnullの場合はalert表示と、条件分岐をすることができそうですね
+      // when searchTerm is null, show alert
       if(this.searchTerm == "") {
         alert('キーワードを入力してください')
       } else {
         fetch(`${base_url}/search/manga?q=${this.searchTerm}&page=1&genre_exclude=33,12,28,34,43&limit=${this.selectedLimit.value}`)
         .then(res=>res.json())
-        .then(updateDOM)
+        .then(this.updateDOM)
         .catch(err=>console.warn(err.message));
       }
       })
@@ -45,19 +47,40 @@ class App {
         <h5 class="card-title">${item.title}</h5>
         <img src=${item.image_url}>
         <p class="card-text">${item.synopsis}.</p>
-        <a class="btn btn-secondary" href="${item.url}" target="_blank">View Details</a><button class="addBtn"> +</button>
+        <a class="btn btn-secondary" href="${item.url}" target="_blank">View Details</a><button class="addBtns"> +</button>
         </div>
       `
     });
     output += `</div>`
     document.getElementById('search-results').innerHTML = output;
 
-    const addBtn = document.querySelector('.addBtn')
-    addBtn.addEventListener('click', ()=> {
-    console.log('rika')
+    const addBtns = document.querySelectorAll('.addBtns')
+    addBtns.forEach(addBtn => {
+      addBtn.addEventListener('click', this.getBookInfo)
+      //book informationをreturnする？
     })
   }
+
+  getBookInfo(){
+    //上の情報を持って来れるのか・・？
+    //情報を取得して、localstorageに保存したい
+    console.log('rika');
+  }
+
+  //上でゲットした情報をUIにupdateする
+  updateListDOM(){
+
+  }
+
+  //xボタンでbook informationを削除する
+  deleteBook(){
+
+  }
+
 }
+
+// ロード時にAppクラスをインスタンス化する。
+window.addEventListener('load', () => new App());
 
 
 
