@@ -8,7 +8,7 @@ class App {
     this.getElements();
     this.submitKeyword();
     this.updateDOM();
-    this.getBookInfo();
+
   }
 
   getElements(){
