@@ -186,6 +186,8 @@ var App = /*#__PURE__*/function () {
       addBtns.forEach(function (addBtn) {
         addBtn.addEventListener('click', _this2.getBookInfo); //book informationをreturnする？
       });
+      console.log('outputを返したい' + output[3]);
+      return output[0];
     }
   }, {
     key: "getBookInfo",
@@ -239,7 +241,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49736" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53623" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

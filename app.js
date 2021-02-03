@@ -59,6 +59,8 @@ class App {
       addBtn.addEventListener('click', this.getBookInfo)
       //book informationをreturnする？
     })
+    console.log('outputを返したい' + output[3])
+    return output[0]
   }
 
   getBookInfo(){
