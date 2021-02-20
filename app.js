@@ -1,14 +1,11 @@
 //Get api url
 const base_url = "https://api.jikan.moe/v3";
 
-class App {
+class searchManga {
   constructor(){
-    this.getBookInfo = this.getBookInfo.bind(this);
-
     this.getElements();
-    this.submitKeyword();
-    this.updateDOM();
-
+    this.fetchMangaData();
+    searchManga.displayManga();
   }
 
   getElements(){
@@ -19,8 +16,8 @@ class App {
   this.searchInput = document.getElementById('search-input');
   }
 
-  //Form Event Listener
-  submitKeyword (){
+  //Fetch Manga Data
+  fetchMangaData (){
     this.searchForm.addEventListener('submit', (e) => {
       e.preventDefault();
       //search word
@@ -31,17 +28,17 @@ class App {
       } else {
         fetch(`${base_url}/search/manga?q=${this.searchTerm}&page=1&genre_exclude=33,12,28,34,43&limit=${this.selectedLimit.value}`)
         .then(res=>res.json())
-        .then(this.updateDOM)
+        .then(searchManga.displayManga)
         .catch(err=>console.warn(err.message));
       }
       })
   }
 
-  //Update Dom
-  updateDOM(data) { //data --> res.json()の内容
-    console.log(data);
+  //UI
+  static displayManga(items) { //data --> res.json()の内容
+    console.log(items);
     let output = '<div class="row">';
-    data.results.forEach(item => {
+    items.results.forEach(item => {
       output += `
         <div class="col-md-4" style="margin-bottom:4rem;">
         <h5 class="card-title">${item.title}</h5>
@@ -53,36 +50,60 @@ class App {
     });
     output += `</div>`
     document.getElementById('search-results').innerHTML = output;
-
-    const addBtns = document.querySelectorAll('.addBtns')
-    addBtns.forEach(addBtn => {
-      addBtn.addEventListener('click', this.getBookInfo)
-      //book informationをreturnする？
-    })
-    console.log('outputを返したい' + output[3])
-    return output[0]
   }
+}
 
-  getBookInfo(){
-    //上の情報を持って来れるのか・・？
-    //情報を取得して、localstorageに保存したい
-    console.log('rika');
+////////////以下お気に入りリスト///////////////////
+
+class Manga {
+  constructor(image, title, link) {
+    this.image = image;
+    this.title = title;
+    this.link = link;
   }
+}
 
-  //上でゲットした情報をUIにupdateする
-  updateListDOM(){
-
-  }
-
-  //xボタンでbook informationを削除する
-  deleteBook(){
-
+class UI {
+  static displayBooks() {
+    const books = Storage.getBooks();
+    books.forEach((book)=> UI.addBooksToList(book));
   }
 
 }
 
+class Storage {
+  static getBooks() {
+    let books;
+    //  getItem() メソッドはキーの名称を渡すと、そのキーに対する値を返します。
+    if(localStorage.getItems('books') === null) {
+      books = [];
+    } else {
+      // JSON.parse() メソッドは文字列を JSON として解析し、文字列によって記述されている JavaScript の値やオブジェクトを構築する
+      books = JSON.parse(localStorage.getItem('books'))
+    }
+    return books;
+  }
+
+  static addBooksToList(book){
+    const books = Storage.getBooks();//booksが返る
+    books.push(book);
+    //JavaScript のオブジェクトや値を JSON 文字列に変換します。
+    localStorage.setItem('books', JSON.stringify(books));
+  }
+
+}
+
+//Event
+
+const addBtns = document.querySelectorAll('.addBtns')
+addBtns.forEach(addBtn => {
+  addBtn.addEventListener('click', this.getBookInfo)
+  //book informationをreturnする？
+})
+
+
 // ロード時にAppクラスをインスタンス化する。
-window.addEventListener('load', () => new App());
+window.addEventListener('load', () => new searchManga());
 
 
 

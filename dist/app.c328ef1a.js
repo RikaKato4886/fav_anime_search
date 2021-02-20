@@ -118,6 +118,8 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"app.js":[function(require,module,exports) {
+var _this2 = this;
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -127,17 +129,16 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //Get api url
 var base_url = "https://api.jikan.moe/v3";
 
-var App = /*#__PURE__*/function () {
-  function App() {
-    _classCallCheck(this, App);
+var searchManga = /*#__PURE__*/function () {
+  function searchManga() {
+    _classCallCheck(this, searchManga);
 
-    this.getBookInfo = this.getBookInfo.bind(this);
     this.getElements();
-    this.submitKeyword();
-    this.updateDOM();
+    this.fetchMangaData();
+    searchManga.displayManga();
   }
 
-  _createClass(App, [{
+  _createClass(searchManga, [{
     key: "getElements",
     value: function getElements() {
       this.searchForm = document.getElementById('search-form');
@@ -145,11 +146,11 @@ var App = /*#__PURE__*/function () {
       this.selectedGenre = document.getElementById('genre');
       this.searchBtn = document.getElementById('search-btn');
       this.searchInput = document.getElementById('search-input');
-    } //Form Event Listener
+    } //Fetch Manga Data
 
   }, {
-    key: "submitKeyword",
-    value: function submitKeyword() {
+    key: "fetchMangaData",
+    value: function fetchMangaData() {
       var _this = this;
 
       this.searchForm.addEventListener('submit', function (e) {
@@ -162,56 +163,98 @@ var App = /*#__PURE__*/function () {
         } else {
           fetch("".concat(base_url, "/search/manga?q=").concat(_this.searchTerm, "&page=1&genre_exclude=33,12,28,34,43&limit=").concat(_this.selectedLimit.value)).then(function (res) {
             return res.json();
-          }).then(_this.updateDOM).catch(function (err) {
+          }).then(searchManga.displayManga).catch(function (err) {
             return console.warn(err.message);
           });
         }
       });
-    } //Update Dom
+    } //UI
 
-  }, {
-    key: "updateDOM",
-    value: function updateDOM(data) {
-      var _this2 = this;
-
+  }], [{
+    key: "displayManga",
+    value: function displayManga(items) {
       //data --> res.json()の内容
-      console.log(data);
+      console.log(items);
       var output = '<div class="row">';
-      data.results.forEach(function (item) {
+      items.results.forEach(function (item) {
         output += "\n        <div class=\"col-md-4\" style=\"margin-bottom:4rem;\">\n        <h5 class=\"card-title\">".concat(item.title, "</h5>\n        <img src=").concat(item.image_url, ">\n        <p class=\"card-text\">").concat(item.synopsis, ".</p>\n        <a class=\"btn btn-secondary\" href=\"").concat(item.url, "\" target=\"_blank\">View Details</a><button class=\"addBtns\"> +</button>\n        </div>\n      ");
       });
       output += "</div>";
       document.getElementById('search-results').innerHTML = output;
-      var addBtns = document.querySelectorAll('.addBtns');
-      addBtns.forEach(function (addBtn) {
-        addBtn.addEventListener('click', _this2.getBookInfo); //book informationをreturnする？
-      });
-      console.log('outputを返したい' + output[3]);
-      return output[0];
     }
-  }, {
-    key: "getBookInfo",
-    value: function getBookInfo() {
-      //上の情報を持って来れるのか・・？
-      //情報を取得して、localstorageに保存したい
-      console.log('rika');
-    } //上でゲットした情報をUIにupdateする
-
-  }, {
-    key: "updateListDOM",
-    value: function updateListDOM() {} //xボタンでbook informationを削除する
-
-  }, {
-    key: "deleteBook",
-    value: function deleteBook() {}
   }]);
 
-  return App;
-}(); // ロード時にAppクラスをインスタンス化する。
+  return searchManga;
+}(); ////////////以下お気に入りリスト///////////////////
 
+
+var Manga = function Manga(image, title, link) {
+  _classCallCheck(this, Manga);
+
+  this.image = image;
+  this.title = title;
+  this.link = link;
+};
+
+var UI = /*#__PURE__*/function () {
+  function UI() {
+    _classCallCheck(this, UI);
+  }
+
+  _createClass(UI, null, [{
+    key: "displayBooks",
+    value: function displayBooks() {
+      var books = Storage.getBooks();
+      books.forEach(function (book) {
+        return UI.addBooksToList(book);
+      });
+    }
+  }]);
+
+  return UI;
+}();
+
+var Storage = /*#__PURE__*/function () {
+  function Storage() {
+    _classCallCheck(this, Storage);
+  }
+
+  _createClass(Storage, null, [{
+    key: "getBooks",
+    value: function getBooks() {
+      var books; //  getItem() メソッドはキーの名称を渡すと、そのキーに対する値を返します。
+
+      if (localStorage.getItems('books') === null) {
+        books = [];
+      } else {
+        // JSON.parse() メソッドは文字列を JSON として解析し、文字列によって記述されている JavaScript の値やオブジェクトを構築する
+        books = JSON.parse(localStorage.getItem('books'));
+      }
+
+      return books;
+    }
+  }, {
+    key: "addBooksToList",
+    value: function addBooksToList(book) {
+      var books = Storage.getBooks(); //booksが返る
+
+      books.push(book); //JavaScript のオブジェクトや値を JSON 文字列に変換します。
+
+      localStorage.setItem('books', JSON.stringify(books));
+    }
+  }]);
+
+  return Storage;
+}(); //Event
+
+
+var addBtns = document.querySelectorAll('.addBtns');
+addBtns.forEach(function (addBtn) {
+  addBtn.addEventListener('click', _this2.getBookInfo); //book informationをreturnする？
+}); // ロード時にAppクラスをインスタンス化する。
 
 window.addEventListener('load', function () {
-  return new App();
+  return new searchManga();
 });
 },{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
@@ -241,7 +284,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "53623" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51776" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
