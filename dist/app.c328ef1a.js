@@ -118,8 +118,6 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"app.js":[function(require,module,exports) {
-var _this2 = this;
-
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -181,6 +179,10 @@ var searchManga = /*#__PURE__*/function () {
       });
       output += "</div>";
       document.getElementById('search-results').innerHTML = output;
+      var addBtns = document.querySelectorAll('.addBtns');
+      addBtns.forEach(function (addBtn) {
+        addBtn.addEventListener('click', Fake.displayname);
+      });
     }
   }]);
 
@@ -195,6 +197,22 @@ var Manga = function Manga(image, title, link) {
   this.title = title;
   this.link = link;
 };
+
+var Fake = /*#__PURE__*/function () {
+  function Fake() {
+    _classCallCheck(this, Fake);
+  }
+
+  _createClass(Fake, null, [{
+    key: "displayname",
+    value: function displayname() {
+      var books = 'えへへ';
+      console.log(books);
+    }
+  }]);
+
+  return Fake;
+}();
 
 var UI = /*#__PURE__*/function () {
   function UI() {
@@ -245,13 +263,9 @@ var Storage = /*#__PURE__*/function () {
   }]);
 
   return Storage;
-}(); //Event
+}(); /////////////  Eventまとめ   ///////////////
+// ロード時にAppクラスをインスタンス化する。
 
-
-var addBtns = document.querySelectorAll('.addBtns');
-addBtns.forEach(function (addBtn) {
-  addBtn.addEventListener('click', _this2.getBookInfo); //book informationをreturnする？
-}); // ロード時にAppクラスをインスタンス化する。
 
 window.addEventListener('load', function () {
   return new searchManga();
@@ -284,7 +298,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51776" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50427" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

@@ -50,6 +50,11 @@ class searchManga {
     });
     output += `</div>`
     document.getElementById('search-results').innerHTML = output;
+
+    const addBtns = document.querySelectorAll('.addBtns')
+    addBtns.forEach(addBtn => {
+      addBtn.addEventListener('click', Fake.displayname)
+});
   }
 }
 
@@ -60,6 +65,13 @@ class Manga {
     this.image = image;
     this.title = title;
     this.link = link;
+  }
+}
+
+class Fake {
+  static displayname() {
+    const books = 'えへへ'
+    console.log(books);
   }
 }
 
@@ -93,13 +105,9 @@ class Storage {
 
 }
 
-//Event
+/////////////  Eventまとめ   ///////////////
 
-const addBtns = document.querySelectorAll('.addBtns')
-addBtns.forEach(addBtn => {
-  addBtn.addEventListener('click', this.getBookInfo)
-  //book informationをreturnする？
-})
+
 
 
 // ロード時にAppクラスをインスタンス化する。
