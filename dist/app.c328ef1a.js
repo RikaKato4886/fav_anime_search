@@ -181,95 +181,69 @@ var searchManga = /*#__PURE__*/function () {
       document.getElementById('search-results').innerHTML = output;
       var addBtns = document.querySelectorAll('.addBtns');
       addBtns.forEach(function (addBtn) {
-        addBtn.addEventListener('click', Fake.displayname);
+        addBtn.addEventListener('click', function () {
+          return console.log('rika');
+        });
       });
     }
   }]);
 
   return searchManga;
-}(); ////////////以下お気に入りリスト///////////////////
-
-
-var Manga = function Manga(image, title, link) {
-  _classCallCheck(this, Manga);
-
-  this.image = image;
-  this.title = title;
-  this.link = link;
-};
-
-var Fake = /*#__PURE__*/function () {
-  function Fake() {
-    _classCallCheck(this, Fake);
-  }
-
-  _createClass(Fake, null, [{
-    key: "displayname",
-    value: function displayname() {
-      var books = 'えへへ';
-      console.log(books);
-    }
-  }]);
-
-  return Fake;
-}();
-
-var UI = /*#__PURE__*/function () {
-  function UI() {
-    _classCallCheck(this, UI);
-  }
-
-  _createClass(UI, null, [{
-    key: "displayBooks",
-    value: function displayBooks() {
-      var books = Storage.getBooks();
-      books.forEach(function (book) {
-        return UI.addBooksToList(book);
-      });
-    }
-  }]);
-
-  return UI;
-}();
-
-var Storage = /*#__PURE__*/function () {
-  function Storage() {
-    _classCallCheck(this, Storage);
-  }
-
-  _createClass(Storage, null, [{
-    key: "getBooks",
-    value: function getBooks() {
-      var books; //  getItem() メソッドはキーの名称を渡すと、そのキーに対する値を返します。
-
-      if (localStorage.getItems('books') === null) {
-        books = [];
-      } else {
-        // JSON.parse() メソッドは文字列を JSON として解析し、文字列によって記述されている JavaScript の値やオブジェクトを構築する
-        books = JSON.parse(localStorage.getItem('books'));
-      }
-
-      return books;
-    }
-  }, {
-    key: "addBooksToList",
-    value: function addBooksToList(book) {
-      var books = Storage.getBooks(); //booksが返る
-
-      books.push(book); //JavaScript のオブジェクトや値を JSON 文字列に変換します。
-
-      localStorage.setItem('books', JSON.stringify(books));
-    }
-  }]);
-
-  return Storage;
-}(); /////////////  Eventまとめ   ///////////////
+}(); ////////////以下お気に入りリストコード///////////////////
+// class Manga {
+//   constructor(image, title, link) {
+//     this.image = image;
+//     this.title = title;
+//     this.link = link;
+//   }
+// }
+// class UI {
+//   static displayBooks() {
+//     const books = Storage.getBooks();//まずstorageの中の配列をゲットする
+//     books.forEach((book)=> UI.addBooksToList(book));
+//   }
+//   static addBookToList(book) {
+//     const list = document.querySelector('#book-list');
+//     const row = document.createElement('tr');
+//     row.innerHTML = `
+//     <td>${book.title}</td>
+//     <td>${book.title}</td>
+//     <td>${book.title}</td>
+//     <td><a href= "#" class="btn btn-danger btn-sm delete">X</a></td>
+//     `;
+//     list.appendChild(row);
+//   }
+// }
+// class Storage {
+//   static getBooks() {
+//     let books;
+//     //  getItem() メソッドはキーの名称を渡すと、そのキーに対する値を返します。
+//     if(localStorage.getItem('books') === null) {
+//       books = [];
+//     } else {
+//       // JSON.parse() メソッドは文字列を JSON として解析し、文字列によって記述されている JavaScript の値やオブジェクトを構築する
+//       books = JSON.parse(localStorage.getItem('books'))
+//     }
+//     return books;
+//   }
+//   static addBooksToList(book){
+//     const books = Storage.getBooks();//booksが返る
+//     books.push(book);
+//     //JavaScript のオブジェクトや値を JSON 文字列に変換します。
+//     localStorage.setItem('books', JSON.stringify(books));
+//   }
+// }
+/////////////  Eventまとめ   ///////////////
 // ロード時にAppクラスをインスタンス化する。
 
 
 window.addEventListener('load', function () {
   return new searchManga();
-});
+}); // document.addEventListener('DOMContentLoaded', UI.displayBooks);
+// document.querySelector('.container').addEventListener('click', (e) => {
+// e.preventDefault();
+// console.log(e.target);
+// });
 },{}],"../../../.config/yarn/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
@@ -298,7 +272,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50427" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "54102" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

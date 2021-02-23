@@ -53,65 +53,75 @@ class searchManga {
 
     const addBtns = document.querySelectorAll('.addBtns')
     addBtns.forEach(addBtn => {
-      addBtn.addEventListener('click', Fake.displayname)
-});
+      addBtn.addEventListener('click', ()=> console.log('rika'))
+    });
   }
 }
 
-////////////以下お気に入りリスト///////////////////
+////////////以下お気に入りリストコード///////////////////
 
-class Manga {
-  constructor(image, title, link) {
-    this.image = image;
-    this.title = title;
-    this.link = link;
-  }
-}
+// class Manga {
+//   constructor(image, title, link) {
+//     this.image = image;
+//     this.title = title;
+//     this.link = link;
+//   }
+// }
 
-class Fake {
-  static displayname() {
-    const books = 'えへへ'
-    console.log(books);
-  }
-}
+// class UI {
+//   static displayBooks() {
+//     const books = Storage.getBooks();//まずstorageの中の配列をゲットする
+//     books.forEach((book)=> UI.addBooksToList(book));
+//   }
 
-class UI {
-  static displayBooks() {
-    const books = Storage.getBooks();
-    books.forEach((book)=> UI.addBooksToList(book));
-  }
+//   static addBookToList(book) {
+//     const list = document.querySelector('#book-list');
+//     const row = document.createElement('tr');
+//     row.innerHTML = `
+//     <td>${book.title}</td>
+//     <td>${book.title}</td>
+//     <td>${book.title}</td>
+//     <td><a href= "#" class="btn btn-danger btn-sm delete">X</a></td>
+//     `;
+//     list.appendChild(row);
+//   }
 
-}
+// }
 
-class Storage {
-  static getBooks() {
-    let books;
-    //  getItem() メソッドはキーの名称を渡すと、そのキーに対する値を返します。
-    if(localStorage.getItems('books') === null) {
-      books = [];
-    } else {
-      // JSON.parse() メソッドは文字列を JSON として解析し、文字列によって記述されている JavaScript の値やオブジェクトを構築する
-      books = JSON.parse(localStorage.getItem('books'))
-    }
-    return books;
-  }
+// class Storage {
+//   static getBooks() {
+//     let books;
+//     //  getItem() メソッドはキーの名称を渡すと、そのキーに対する値を返します。
+//     if(localStorage.getItem('books') === null) {
+//       books = [];
+//     } else {
+//       // JSON.parse() メソッドは文字列を JSON として解析し、文字列によって記述されている JavaScript の値やオブジェクトを構築する
+//       books = JSON.parse(localStorage.getItem('books'))
+//     }
+//     return books;
+//   }
 
-  static addBooksToList(book){
-    const books = Storage.getBooks();//booksが返る
-    books.push(book);
-    //JavaScript のオブジェクトや値を JSON 文字列に変換します。
-    localStorage.setItem('books', JSON.stringify(books));
-  }
-
-}
+//   static addBooksToList(book){
+//     const books = Storage.getBooks();//booksが返る
+//     books.push(book);
+//     //JavaScript のオブジェクトや値を JSON 文字列に変換します。
+//     localStorage.setItem('books', JSON.stringify(books));
+//   }
+// }
 
 /////////////  Eventまとめ   ///////////////
 
-
-
-
 // ロード時にAppクラスをインスタンス化する。
 window.addEventListener('load', () => new searchManga());
+
+// document.addEventListener('DOMContentLoaded', UI.displayBooks);
+
+// document.querySelector('.container').addEventListener('click', (e) => {
+// e.preventDefault();
+// console.log(e.target);
+// });
+
+
 
 
 
